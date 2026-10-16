@@ -1,2 +1,578 @@
-# cafe
-idkk
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+     <link rel="icon" href="https://i.imgur.com/I5FnrbK.gif">
+    <title>WebWie</title>
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <meta property="og:image" content="http://25.media.tumblr.com/tumblr_m3illaAsHw1rv68y7o1_400.gif" />
+<meta property="twitter:card" content="summary_large_image">
+<!-- Brown Rainbow Over Clouds - https://www.cursors-4u.com/cursor/brown-rainbow-over-clouds -->
+<link rel="stylesheet" href="https://cdn.cursors-4u.net/cursors/animated/brown-rainbow-over-clouds-a88030d8-32.css">
+<!-- End www.Cursors-4U.com Code -->
+  </head>
+  <body>
+<style>
+
+html {
+overflow: scroll;
+overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+width: 0; /* remove scrollbar space */
+background: transparent; /* to make scrollbar invisible */
+}
+::-webkit-scrollbar-thumb {
+background: transparent;
+}
+::selection {
+/* Change highlight background color */
+background: #BEDAF8;
+/* Change highlight text color */
+color: #104F94;
+}
+
+a {text-decoration: none; color: black; }
+
+@font-face {
+font-family: kawaii stitch;
+src: url(https://dl.dropbox.com/s/yjal3we9j6biyn5/Kawaii%20Stitch.ttf);}
+ 
+@font-face {
+font-family: starborn;
+src: url(https://dl.dropbox.com/s/l0541on0m5eqvdj/Starborn.ttf);
+}
+ 
+@font-face {
+font-family: pixel;
+src: url(https://dl.dropbox.com/s/kmhe7d3n18vdz5e/w95fa.woff?dl=0);
+}
+ 
+@font-face {
+src: url(https://dl.dropbox.com/s/ct0s037q78sao3f/Frighted.ttf);
+font-family: Frighted;
+}
+ 
+@font-face {
+src: url(https://dl.dropbox.com/s/ktlx5w7t8gk42nb/SakeMoru-Regular.ttf);
+font-family: SakeMoru;
+}
+ 
+@font-face {
+font-family:'yipes';
+src: url(https://dl.dropbox.com/s/qrdm3wived8sm66/Yipes.ttf);
+}
+ 
+@font-face {
+font-family:'fenotype';
+src: url(https://dl.dropbox.com/s/klo6yfrf62916qp/02.10FEN.TTF);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-image: url('https://file.garden/atELy_zqYsI2sRyG/cafe.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: pixel, sans-serif;
+}
+
+.music-player {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 15px;
+  background: rgba(42, 27, 21, 0.78);
+  border: 3px solid #f2d7a3;
+  border-radius: 14px;
+  box-shadow: 0 0 0 3px #7e5140, 0 0 16px rgba(255, 214, 143, 0.35);
+  backdrop-filter: blur(2px);
+}
+
+.music-toggle {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 8px;
+  background: #f2d7a3;
+  color: #2f1c14;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 0 0 2px #7e5140;
+}
+
+.music-meta {
+  width: 1320px;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+
+.music-text {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #f8ecd4;
+  text-transform: uppercase;
+  padding-left: 100%;
+  animation: scrollText 5s linear infinite;
+}
+
+.music-player.paused .music-text {
+  animation-play-state: paused;
+  opacity: 0.7;
+}
+
+@keyframes scrollText {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+.order-box {
+  position: fixed;
+  left: 200px;
+  top: 185px;
+  width: 170px;
+  min-height: 72px;
+  background: rgba(255, 245, 228, 0.9);
+  border: 3px solid #5d4338;
+  box-shadow: 0 0 0 3px #d9b77d, 0 8px 16px rgba(0,0,0,0.18);
+  padding: 12px 14px;
+  text-decoration: none;
+  color: #5d4338;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: pixel, sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: orderPulse 1.5s steps(2, end) infinite;
+}
+
+.order-box::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  bottom: -16px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 16px solid #5d4338;
+}
+
+.order-box::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  bottom: -9px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 12px solid rgba(255, 245, 228, 0.9);
+}
+
+@keyframes orderPulse {
+  0%, 100% { transform: translateY(0); box-shadow: 0 0 0 3px #d9b77d, 0 8px 16px rgba(0,0,0,0.18); }
+  50% { transform: translateY(-2px); box-shadow: 0 0 0 3px #d9b77d, 0 12px 18px rgba(0,0,0,0.22), 0 0 18px rgba(255, 215, 125, 0.4); }
+}
+
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(21, 10, 8, 0.3);
+  z-index: 50;
+}
+
+.dialog-overlay.show {
+  display: flex;
+}
+
+.dialog-scene {
+  position: relative;
+  width: min(760px, 78vw);
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: dialogIn 0.35s ease-out;
+}
+
+@keyframes dialogIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dialogue-panel {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 220px;
+  background: rgba(255, 246, 234, 0.98);
+  border: 5px solid #4a2d2a;
+  box-shadow: 0 0 0 5px #d9b77d, 0 20px 30px rgba(0,0,0,0.18);
+  padding: 28px 28px 24px;
+  box-sizing: border-box;
+}
+
+.character-wrap {
+  position: relative;
+  z-index: 1;
+  margin-top: -12px;
+  width: min(620px, 76vw);
+  height: 500px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+}
+
+.character-wrap img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 10px 12px rgba(50, 28, 18, 0.25));
+}
+
+.dialogue-name {
+  font-size: 18px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #4a2d2a;
+  margin-bottom: 18px;
+  font-family: pixel, sans-serif;
+}
+
+.dialogue-text {
+  position: relative;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #3b2b25;
+  min-height: 96px;
+  font-family: pixel, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.dialogue-text .char {
+  display: inline-block;
+  opacity: 0;
+  animation: speakChar 0.12s ease forwards;
+  animation-delay: calc(var(--i) * 0.04s);
+  transform-origin: center bottom;
+}
+
+.dialogue-text::after {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background: #4a2d2a;
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: blinkCursor 0.8s steps(1) infinite;
+}
+
+@keyframes speakChar {
+  0% {
+    opacity: 0;
+    transform: translateY(2px) scaleY(0.92);
+    filter: blur(0.5px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-1px) scaleY(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes blinkCursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.choice-row {
+  display: none;
+  gap: 18px;
+  justify-content: center;
+  margin-top: 18px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.choice-row.show {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.choice-btn {
+  min-width: 170px;
+  padding: 12px 18px;
+  border: 3px solid #4a2d2a;
+  background: #f2d7a3;
+  color: #4a2d2a;
+  font-family: pixel, sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px #d9b77d;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.choice-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px #d9b77d, 0 8px 16px rgba(0,0,0,0.12);
+}
+
+.webwie-button-wrap {
+  position: fixed;
+  right: 46px;
+  bottom: 36px;
+  z-index: 20;
+}
+
+.webwie-pixel-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+  padding: 12px 18px;
+  border: 4px solid #4a2d2a;
+  background: #f6d96e;
+  color: #4a2d2a;
+  font-family: pixel, sans-serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px #d59d63, 0 8px 0 #9e5e44;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  animation: pixelFloat 1.8s ease-in-out infinite alternate;
+}
+
+.webwie-pixel-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 0 4px #d59d63, 0 10px 0 #9e5e44, 0 0 18px rgba(246, 217, 110, 0.7);
+  filter: brightness(1.04);
+}
+
+.webwie-pixel-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 4px #d59d63, 0 4px 0 #9e5e44;
+}
+
+@keyframes pixelFloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2px); }
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 3px solid #4a2d2a;
+  background: #f2d7a3;
+  color: #4a2d2a;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+</style>
+
+  <div class="music-player" id="musicPlayer">
+    <button class="music-toggle" id="pauseBtn" aria-label="Pause music">||</button>
+    <div class="music-meta">
+      <div class="music-text">Now playing: Bubble Gum (Instrumental) by NewJeans •</div>
+    </div>
+  </div>
+
+  <a href="#" class="order-box" aria-label="Order message">Order</a>
+
+  <div class="webwie-button-wrap">
+    <button class="webwie-pixel-btn" type="button" onclick="window.location.href='../WEBWIE.html'">Go Back</button>
+  </div>
+
+  <div class="dialog-overlay" id="orderModal" aria-hidden="true">
+    <div class="dialog-scene" role="dialog" aria-modal="true">
+      <div class="character-wrap">
+        <img src="https://file.garden/atELy_zqYsI2sRyG/charactercafe2.png" alt="Character cafe" />
+      </div>
+      <div class="dialogue-panel">
+        <button class="close-btn" type="button" aria-label="Close">×</button>
+        <div class="dialogue-name">Jade</div>
+        <div class="dialogue-text">Hello! Welcome in. I saved a table for you by the window. Would you like to order something warm or cold?</div>
+        <div class="choice-row" id="choiceRow">
+          <button class="choice-btn" type="button" data-choice="warm">Warm (Usual)</button>
+          <button class="choice-btn" type="button" data-choice="cold">Cold (Chibi)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgAudio" autoplay loop>
+    <source src="https://file.garden/atELy_zqYsI2sRyG/Bubble%20Gum%20(Instrumental).mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const audio = document.getElementById('bgAudio');
+    const player = document.getElementById('musicPlayer');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const orderBox = document.querySelector('.order-box');
+    const modal = document.getElementById('orderModal');
+    const closeBtn = document.querySelector('.close-btn');
+    const dialogueText = document.querySelector('.dialogue-text');
+    const choiceRow = document.getElementById('choiceRow');
+    const dialogueName = document.querySelector('.dialogue-name');
+    const characterImg = document.querySelector('.character-wrap img');
+    const dialogueMessage = "Hello! Welcome in. I saved a table for you by the window. Would you like to order something warm or cold?";
+
+    const conversations = {
+      warm: {
+        name: 'Jade',
+        image: 'https://file.garden/atELy_zqYsI2sRyG/characterhappy.png',
+        text: 'A warm drink sounds perfect. Would you like to see the examples?',
+        nextButton: {
+          label: 'Yes please',
+          href: 'WEBWIE.html'
+        }
+      },
+      cold: {
+        name: 'Jade',
+        image: 'https://file.garden/atELy_zqYsI2sRyG/characterhappy.png',
+        text: 'A cold one it is. Would you like to see the examples?',
+        nextButton: {
+          label: 'Yes please',
+          href: '../Chibi/CHIBI.html'
+        }
+      }
+    };
+
+    let dialogueTimer;
+
+    function createChoiceButton(label, choice) {
+      const button = document.createElement('button');
+      button.className = 'choice-btn';
+      button.type = 'button';
+      button.textContent = label;
+      if (choice) button.dataset.choice = choice;
+      return button;
+    }
+
+    function resetDialogue() {
+      dialogueName.textContent = 'Jade';
+      characterImg.src = 'https://file.garden/atELy_zqYsI2sRyG/charactercafe2.png';
+      choiceRow.replaceChildren(
+        createChoiceButton('Warm (Usual)', 'warm'),
+        createChoiceButton('Cold (Chibi)', 'cold')
+      );
+    }
+
+    function animateDialogueText(text) {
+      clearTimeout(dialogueTimer);
+      choiceRow.classList.remove('show');
+      dialogueText.innerHTML = '';
+      [...text].forEach((char, index) => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.style.setProperty('--i', index);
+        span.textContent = char === ' ' ? '\u00A0' : char;
+        dialogueText.appendChild(span);
+      });
+
+      const totalDuration = text.length * 50 + 500;
+      dialogueTimer = setTimeout(() => {
+        choiceRow.classList.add('show');
+      }, totalDuration);
+    }
+
+    function handleChoice(choice) {
+      const scene = conversations[choice];
+      if (!scene) return;
+
+      dialogueName.textContent = scene.name;
+      characterImg.src = scene.image;
+      if (scene.nextButton) {
+        animateDialogueText(scene.text);
+        const finalButton = createChoiceButton(scene.nextButton.label);
+        finalButton.addEventListener('click', () => {
+          window.location.href = scene.nextButton.href;
+        });
+        choiceRow.replaceChildren(finalButton);
+      } else {
+        animateDialogueText(scene.text);
+      }
+    }
+
+    audio.play().catch(() => {
+      console.log('Autoplay was blocked until user interaction.');
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        pauseBtn.textContent = '||';
+        player.classList.remove('paused');
+      } else {
+        audio.pause();
+        pauseBtn.textContent = '▶';
+        player.classList.add('paused');
+      }
+    });
+
+    orderBox.addEventListener('click', (event) => {
+      event.preventDefault();
+      resetDialogue();
+      animateDialogueText(dialogueMessage);
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+    });
+
+    choiceRow.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-choice]');
+      if (button) handleChoice(button.dataset.choice);
+    });
+
+    closeBtn.addEventListener('click', () => {
+      choiceRow.classList.remove('show');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+    });
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        choiceRow.classList.remove('show');
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+  </script>
+
+  </body>
+</html>
