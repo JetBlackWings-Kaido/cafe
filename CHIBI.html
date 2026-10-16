@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chibi Wall</title>
+	<style>
+
+        html {
+overflow: scroll;
+overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+width: 0; /* remove scrollbar space */
+background: transparent; /* to make scrollbar invisible */
+}
+::-webkit-scrollbar-thumb {
+background: transparent;
+}
+::selection {
+/* Change highlight background color */
+background: #BEDAF8;
+/* Change highlight text color */
+color: #104F94;
+}
+
+a {text-decoration: none; color: black; }
+
+@font-face {
+font-family: kawaii stitch;
+src: url(https://dl.dropbox.com/s/yjal3we9j6biyn5/Kawaii%20Stitch.ttf);}
+ 
+@font-face {
+font-family: starborn;
+src: url(https://dl.dropbox.com/s/l0541on0m5eqvdj/Starborn.ttf);
+}
+ 
+@font-face {
+font-family: pixel;
+src: url(https://dl.dropbox.com/s/kmhe7d3n18vdz5e/w95fa.woff?dl=0);
+}
+ 
+@font-face {
+src: url(https://dl.dropbox.com/s/ct0s037q78sao3f/Frighted.ttf);
+font-family: Frighted;
+}
+ 
+@font-face {
+src: url(https://dl.dropbox.com/s/ktlx5w7t8gk42nb/SakeMoru-Regular.ttf);
+font-family: SakeMoru;
+}
+ 
+@font-face {
+font-family:'yipes';
+src: url(https://dl.dropbox.com/s/qrdm3wived8sm66/Yipes.ttf);
+}
+ 
+@font-face {
+font-family:'fenotype';
+src: url(https://dl.dropbox.com/s/klo6yfrf62916qp/02.10FEN.TTF);
+}
+ 
+		:root {
+			color-scheme: light;
+			--ink: #563d39;
+			--blue: #c28f78;
+			--paper: #fff3e7;
+			--room-background: url("Cafewall.png");
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			height: 100svh;
+			min-width: 320px;
+            margin: 0;
+			margin: 0;
+			overflow-x: auto;
+			overflow-y: hidden;
+			color: var(--ink);
+			font-family: "Trebuchet MS", sans-serif;
+		}
+
+		button { font: inherit; }
+
+		.room {
+			position: relative;
+			isolation: isolate;
+			display: flex;
+			width: max-content;
+			min-width: 100vw;
+			height: 100svh;
+			min-height: 100svh;
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 46px clamp(24px, 5vw, 72px) 72px;
+			overflow: visible;
+			background-color: #cce8f3;
+			background-image: var(--room-background),
+				linear-gradient(180deg, #d9f0f5 0%, #d9f0f5 78%, #c28f78 78%, #c28f78 100%);
+			background-position: center;
+			background-size: 100% 100%;
+		}
+
+		.room::before {
+			position: absolute;
+			z-index: -1;
+			inset: 0 0 22% 0;
+			background-image: radial-gradient(#fff 1px, transparent 1px);
+			background-size: 24px 24px;
+			content: "";
+			opacity: 0.28;
+			pointer-events: none;
+		}
+
+		.room-heading {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			margin-bottom: 48px;
+		}
+
+		.room-title {
+			margin: 0;
+			padding: 10px 22px;
+			border: 2px solid var(--ink);
+			background: var(--paper);
+			box-shadow: 5px 5px 0 var(--blue);
+			font-family: pixel;
+			font-size: clamp(1.35rem, 4vw, 2rem);
+			font-weight: 700;
+		}
+
+		.art-info-button {
+			min-height: 56px;
+			padding: 12px 20px;
+			border: 2px solid var(--ink);
+			background: #f5d082;
+			color: var(--ink);
+			font-family: pixel, sans-serif;
+			font-size: 1rem;
+			cursor: pointer;
+			box-shadow: 4px 4px 0 var(--blue);
+			transition: transform 150ms ease, box-shadow 150ms ease;
+		}
+
+		.art-info-button:hover { transform: translateY(-2px); box-shadow: 4px 6px 0 var(--blue); }
+		.art-info-button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--blue); }
+		.art-info-button:focus-visible { outline: 3px solid #f0c5b4; outline-offset: 4px; }
+
+		.wall-gallery {
+			display: grid;
+			width: max-content;
+			grid-template-columns: repeat(6, clamp(130px, 18vw, 230px));
+			align-items: center;
+			gap: clamp(14px, 5vw, 58px);
+		}
+
+		.wall-frame {
+			position: relative;
+			font: inherit;
+			padding: 10px;
+			border: 3px solid #fff3e7;
+			background: #c28f78;
+			color: inherit;
+			cursor: zoom-in;
+			box-shadow: 0 5px 0 #80584e, 0 12px 20px rgb(74 48 43 / 22%);
+			transform: rotate(var(--tilt, 0deg));
+			transform-origin: 50% -24px;
+		}
+
+		.wall-frame::before,
+		.wall-frame::after {
+			position: absolute;
+			left: 50%;
+			content: "";
+			pointer-events: none;
+		}
+
+		.wall-frame::before {
+			top: -28px;
+			width: 8px;
+			height: 8px;
+			border: 1px solid #4b3934;
+			border-radius: 50%;
+			background: radial-gradient(circle at 35% 30%, #fff1d6 0 1px, #9a7657 2px, #4b3934 100%);
+			box-shadow: 0 1px 2px rgb(54 38 33 / 35%);
+			transform: translateX(-50%);
+		}
+
+		.wall-frame::after {
+			top: -20px;
+			width: 2px;
+			height: 20px;
+			background: linear-gradient(90deg, #80584e, #fff3e7, #80584e);
+			transform: translateX(-50%);
+		}
+
+		.wall-gallery.is-swinging .wall-frame {
+			animation: frame-swing 950ms ease-in-out infinite;
+		}
+
+		.wall-gallery.is-swinging .wall-frame:nth-child(2n) { animation-delay: 55ms; }
+		.wall-gallery.is-swinging .wall-frame:nth-child(3n) { animation-delay: 110ms; }
+
+		@keyframes frame-swing {
+			0%, 100% { rotate: 0deg; }
+			20% { rotate: 5deg; }
+			42% { rotate: -4deg; }
+			62% { rotate: 2.5deg; }
+			80% { rotate: -1deg; }
+		}
+
+		.wall-frame:hover { filter: brightness(1.06); }
+		.wall-frame:focus-visible { outline: 3px solid #f0c5b4; outline-offset: 5px; }
+
+		.wall-frame:nth-child(2) { --tilt: 2deg; }
+		.wall-frame:nth-child(3) { --tilt: -2deg; }
+
+		.wall-art {
+			display: grid;
+			aspect-ratio: 1 / 1;
+			place-items: center;
+			overflow: hidden;
+			border: 1px solid #9d7468;
+			background: linear-gradient(145deg, #fff7ed, #efd3c8);
+			color: #76574f;
+			font-size: 0.72rem;
+			font-weight: 700;
+			letter-spacing: 0.08em;
+			text-align: center;
+		}
+
+		.wall-art img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.wall-frame:nth-child(2) .wall-art {
+			background: linear-gradient(145deg, #f8e7ca, #e9b8b0);
+		}
+
+		.wall-frame:nth-child(3) .wall-art {
+			background: linear-gradient(145deg, #f3e1d0, #ddbbb1);
+		}
+
+		.shelf {
+			width: 1670px;
+			height: 15px;
+			margin-top: 36px;
+			border: 2px solid #704e48;
+			background: #a97561;
+			box-shadow: 0 7px 0 #80584e, 0 12px 18px rgb(32 57 75 / 15%);
+		}
+
+		.room-plants {
+			position: absolute;
+			right: clamp(110px, 14vw, 190px);
+			bottom: 12px;
+			left: clamp(16px, 3vw, 40px);
+			display: flex;
+			height: 220px;
+			align-items: flex-end;
+			justify-content: space-between;
+			pointer-events: none;
+			z-index: 1;
+		}
+
+		.room-plant {
+			display: block;
+			object-fit: contain;
+			image-rendering: pixelated;
+			filter: drop-shadow(0 5px 5px rgb(54 38 33 / 24%));
+		}
+
+		.room-plant--large { width: 175px; height: 175px; }
+		.room-plant--small { width: 230px; height: 230px; }
+
+		.dreaming-cat {
+			position: relative;
+			z-index: 2;
+			display: flex;
+			width: 220px;
+			height: 140px;
+			flex: 0 0 auto;
+			align-items: flex-end;
+			justify-content: center;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			cursor: pointer;
+			pointer-events: auto;
+		}
+
+		.room-cat {
+			display: block;
+			width: 220px;
+			height: 110px;
+			object-fit: contain;
+			image-rendering: pixelated;
+			filter: drop-shadow(0 4px 4px rgb(54 38 33 / 20%));
+		}
+
+		.dream-bubble {
+			position: absolute;
+			bottom: calc(100% - 8px);
+			left: 50%;
+			z-index: 1;
+			max-width: calc(100vw - 32px);
+			padding: 8px 12px;
+			border: 2px solid var(--ink);
+			border-radius: 12px 12px 12px 3px;
+			background: var(--paper);
+			color: var(--ink);
+			font-family: pixel, sans-serif;
+			font-size: 0.78rem;
+			white-space: nowrap;
+			box-shadow: 2px 3px 0 rgb(74 48 43 / 20%);
+			transform: translateX(-50%);
+			pointer-events: none;
+		}
+
+		.dream-bubble::after {
+			position: absolute;
+			bottom: -7px;
+			left: calc(50% - 5px);
+			width: 9px;
+			height: 9px;
+			border-right: 2px solid var(--ink);
+			border-bottom: 2px solid var(--ink);
+			background: var(--paper);
+			content: "";
+			transform: rotate(45deg);
+		}
+
+		.artwork-dialog {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			max-width: calc(100vw - 24px);
+			max-height: calc(100svh - 24px);
+			margin: 0;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			overflow: visible;
+			transform: translate(-50%, -50%);
+		}
+
+		.artwork-dialog::backdrop {
+			background: rgb(17 37 53 / 78%);
+			backdrop-filter: blur(5px);
+			animation: artwork-backdrop-in 240ms ease-out both;
+		}
+
+		.art-paper-dialog {
+			position: fixed;
+			inset: 0;
+			width: min(900px, calc(100vw - 32px));
+			height: min(760px, calc(100svh - 40px));
+			margin: auto;
+			padding: 0;
+			border: 0;
+			background: transparent;
+			overflow: visible;
+		}
+
+		.art-paper-dialog::backdrop {
+			background: rgb(17 37 53 / 68%);
+			backdrop-filter: blur(4px);
+			animation: artwork-backdrop-in 240ms ease-out both;
+		}
+
+		.art-paper-sheet {
+			width: 100%;
+			height: 100%;
+			padding: clamp(18px, 4vw, 42px);
+			border: 7px solid var(--paper);
+			background: repeating-linear-gradient(#fffdf4 0 31px, #e8dfcb 32px 33px);
+			box-shadow: 0 8px 0 #c4ad7f, 0 24px 60px rgb(0 0 0 / 40%);
+			overflow-y: auto;
+		}
+
+		.art-paper-dialog[open] .art-paper-sheet {
+			animation: artwork-zoom-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+		}
+
+		.art-paper-placeholder {
+			display: grid;
+			width: 100%;
+			height: 100%;
+			min-height: 240px;
+			place-items: center;
+			border: 2px dashed rgb(86 61 57 / 35%);
+			color: rgb(86 61 57 / 70%);
+			font-family: pixel, sans-serif;
+			text-align: center;
+		}
+
+		.zoomed-view {
+			display: grid;
+			width: min(calc(100vw - 24px), 760px);
+			grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+			align-items: center;
+			gap: 16px;
+		}
+
+		.artwork-dialog[open] .zoomed-view {
+			animation: artwork-zoom-in 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+			transform-origin: center;
+		}
+
+		@keyframes artwork-zoom-in {
+			from { opacity: 0; transform: scale(0.82); }
+			to { opacity: 1; transform: scale(1); }
+		}
+
+		@keyframes artwork-backdrop-in {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		.zoomed-frame {
+			min-width: 0;
+			width: 100%;
+			padding: 12px;
+			border: 8px solid #fff;
+			background: #f5d082;
+			box-shadow: 0 8px 0 #527d9c, 0 24px 60px rgb(0 0 0 / 40%);
+		}
+
+		.zoomed-frame .wall-art {
+			width: 100%;
+			font-size: clamp(0.9rem, 3vw, 1.2rem);
+		}
+
+		.photo-paper {
+			min-width: 0;
+			min-height: 100%;
+			padding: 11px 14px;
+			border: 1px solid #c4ad7f;
+			background: repeating-linear-gradient(#fffdf4 0 27px, #e8dfcb 28px 29px);
+			box-shadow: 0 4px 0 #c4ad7f, 0 10px 22px rgb(0 0 0 / 20%);
+			color: #3e4b4b;
+			overflow: auto;
+		}
+
+		.paper-heading {
+			margin: 0 0 9px;
+			font-family: Georgia, serif;
+			font-size: 0.95rem;
+			font-weight: 700;
+		}
+
+		.paper-details {
+			display: grid;
+			gap: 5px;
+			margin: 0;
+			font-size: clamp(0.72rem, 1.1vw, 0.9rem);
+			line-height: 1.4;
+		}
+
+		.paper-details > div {
+			display: grid;
+			grid-template-columns: 58px minmax(0, 1fr);
+			gap: 8px;
+		}
+
+		.paper-details dt { font-weight: 700; }
+		.paper-details dd { margin: 0; }
+
+		.dialog-close {
+			position: absolute;
+			top: -12px;
+			right: -12px;
+			z-index: 1;
+			display: grid;
+			width: 36px;
+			height: 36px;
+			place-items: center;
+			border: 2px solid var(--ink);
+			background: var(--paper);
+			color: var(--ink);
+			cursor: pointer;
+			font-size: 1.4rem;
+			line-height: 1;
+		}
+
+		.cafe-link {
+			position: fixed;
+			right: max(18px, env(safe-area-inset-right));
+			bottom: max(18px, env(safe-area-inset-bottom));
+			z-index: 5;
+			display: inline-flex;
+			min-height: 44px;
+			align-items: center;
+			justify-content: center;
+			padding: 10px 16px;
+			border: 3px solid var(--paper);
+			background: var(--blue);
+			color: var(--paper);
+			font-family: pixel, sans-serif;
+			font-size: 0.85rem;
+			text-decoration: none;
+			box-shadow: 0 4px 0 #80584e, 0 8px 16px rgb(74 48 43 / 22%);
+			transition: transform 150ms ease, filter 150ms ease;
+		}
+
+		.cafe-link:hover { transform: translateY(-2px); filter: brightness(1.06); }
+		.cafe-link:active { transform: translateY(2px); box-shadow: 0 2px 0 #80584e; }
+		.cafe-link:focus-visible { outline: 3px solid #f0c5b4; outline-offset: 4px; }
+
+		@media (max-width: 560px) {
+			.room { padding: 34px 16px 48px; }
+			.room-heading { gap: 10px; margin-bottom: 38px; flex-wrap: wrap; }
+			.room-title { padding: 8px 12px; }
+			.art-info-button { min-height: 50px; padding: 10px 16px; }
+			.wall-gallery { gap: 10px; }
+			.wall-frame { padding: 6px; border-width: 2px; }
+			.wall-art { font-size: 0.56rem; }
+			.shelf { width: 830px; margin-top: 25px; }
+			.room-plants { right: 108px; bottom: 8px; height: 170px; }
+			.room-plant--large { width: 140px; height: 140px; }
+			.room-plant--small { width: 185px; height: 185px; }
+			.dreaming-cat { width: 160px; height: 105px; }
+			.room-cat { width: 160px; height: 80px; }
+			.dream-bubble { font-size: 0.66rem; }
+			.zoomed-view { gap: 8px; }
+			.zoomed-frame { padding: 6px; border-width: 4px; }
+			.photo-paper { padding: 8px; }
+			.paper-heading { font-size: 0.82rem; }
+			.paper-details { gap: 4px; font-size: 0.68rem; }
+			.paper-details > div { grid-template-columns: 38px minmax(0, 1fr); gap: 4px; }
+			.dialog-close { top: -8px; right: -8px; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.artwork-dialog[open] .zoomed-view,
+			.artwork-dialog::backdrop { animation: none; }
+			.wall-gallery.is-swinging .wall-frame { animation: none; }
+			.cafe-link { transition: none; }
+			.art-info-button { transition: none; }
+		}
+	</style>
+</head>
+<body>
+	<main class="room">
+		<div class="room-heading">
+			<h1 class="room-title">My Chibi Arts</h1>
+			<button class="art-info-button" id="openArtPaper" type="button">Art Info</button>
+		</div>
+
+		<section class="wall-gallery" aria-label="Framed pictures on the wall">
+			<button class="wall-frame" type="button" aria-label="Zoom wall photo 1" data-who="Henry Parker" data-when=" Drawn at September 27, 2026" data-where="From Toyhou.se, oc by Bleurenya!! Character was created by netherconsensus" data-about="This was quite fun to draw! I love how this oc looks so unique and cute^^ "><span class="wall-art"><img src="chibi.png" alt="Description of the photo"></span></button>
+			<button class="wall-frame" type="button" aria-label="Zoom wall photo 2" data-who="Me and Jade" data-when="September 1, 2026" data-where="I don't know what to put here " data-about="Was so bored at that time so I decided to draw me and jade as chibi!!"><span class="wall-art"><img src="chibi1.png" alt="Description of the photo"></span></button>
+			<button class="wall-frame" type="button" aria-label="Zoom wall photo 3" data-who="***" data-when="September 5, 2026" data-where="Met someone who's willing to commission me from Discord!! Oc by bnnyqi" data-about="Was really fun to draw!! This person also commissioned me 2 times! This art was a freebie for them ^^"><span class="wall-art"><img src="chibi3.png" alt="Description of the photo"></span></button>
+			<button class="wall-frame" type="button" aria-label="Zoom wall photo 4" data-who="***" data-when="August 29, 2026" data-where="Tiktok" data-about="This was the time when I'm practicing how to draw chibi. This one is also free"><span class="wall-art"><img src="chibi2.png" alt="Description of the photo"></span></button>
+			<button class="wall-frame" type="button" aria-label="Zoom wall photo 5" data-who="Va'alira" data-when="October 2, 2026" data-where="Toyhou.se, Oc and created by ariesrex" data-about="Quite fun to draw!! I love how I render this one!"><span class="wall-art"><img src="Raffle2.jpg" alt="Description of the photo"></span></button>
+			<button class="wall-frame" type="button" aria-label="Zoom wall photo 6" data-who="Moufette" data-when="September 27, 2026" data-where="Toyhou.se, Oc by Betty_bee, created by saitte " data-about="So fun to draw!! ^^"><span class="wall-art"><img src="free2.jpg" alt="Description of the photo"></span></button>
+		</section>
+		<div class="shelf" aria-hidden="true"></div>
+		<div class="room-plants" aria-hidden="true">
+			<img class="room-plant room-plant--large" src="plant.gif" alt="">
+			<button class="dreaming-cat" id="catAudioToggle" type="button" aria-label="Play School Rooftop music" aria-pressed="false">
+				<span class="dream-bubble">hisohkah - school rooftop</span>
+				<img class="room-cat" src="cat.gif" alt="">
+			</button>
+			<img class="room-plant room-plant--small" src="plant2.gif" alt="">
+		</div>
+	</main>
+	<audio id="roomSong" src="SchoolRooftop.mp3" autoplay loop preload="auto"></audio>
+	<a class="cafe-link" href="../Cafe/Cafe.html">Go back to cafe</a>
+
+	<dialog class="artwork-dialog" id="artworkDialog" aria-label="Zoomed wall photo">
+		<button class="dialog-close" id="closeArtwork" type="button" aria-label="Close zoomed photo">&times;</button>
+		<div class="zoomed-view">
+			<div class="zoomed-frame" id="zoomedFrame"></div>
+			<section class="photo-paper" id="photoPaper" tabindex="0" aria-label="Photo information">
+				<h2 class="paper-heading">Photo notes</h2>
+				<dl class="paper-details">
+					<div><dt>Who</dt><dd id="photoWho"></dd></div>
+					<div><dt>When</dt><dd id="photoWhen"></dd></div>
+					<div><dt>Where</dt><dd id="photoWhere"></dd></div>
+					<div><dt>About</dt><dd id="photoAbout"></dd></div>
+				</dl>
+			</section>
+		</div>
+	</dialog>
+
+	<dialog class="art-paper-dialog" id="artPaperDialog" aria-label="Art information paper">
+		<button class="dialog-close" id="closeArtPaper" type="button" aria-label="Close art information">&times;</button>
+		<div class="art-paper-sheet">
+			<div class="art-paper-placeholder">Your paper image will go here</div>
+		</div>
+	</dialog>
+
+	<script>
+		const wallGallery = document.querySelector(".wall-gallery");
+		const roomSong = document.getElementById("roomSong");
+		const catAudioToggle = document.getElementById("catAudioToggle");
+		const artworkDialog = document.getElementById("artworkDialog");
+		const artPaperDialog = document.getElementById("artPaperDialog");
+		const zoomedFrame = document.getElementById("zoomedFrame");
+		let swingTimeout;
+		let swingIsActive = false;
+
+		function swingFramesOnScroll(event) {
+			if (![document, document.documentElement, document.body].includes(event.target)) return;
+			if (!swingIsActive) {
+				wallGallery.classList.add("is-swinging");
+				swingIsActive = true;
+			}
+			clearTimeout(swingTimeout);
+			swingTimeout = setTimeout(() => {
+				wallGallery.classList.remove("is-swinging");
+				swingIsActive = false;
+			}, 700);
+		}
+
+		document.addEventListener("scroll", swingFramesOnScroll, { capture: true, passive: true });
+
+		document.getElementById("openArtPaper").addEventListener("click", () => artPaperDialog.showModal());
+		document.getElementById("closeArtPaper").addEventListener("click", () => artPaperDialog.close());
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape" && artPaperDialog.open) {
+				event.preventDefault();
+				artPaperDialog.close();
+			}
+		});
+		artPaperDialog.addEventListener("click", (event) => {
+			if (event.target === artPaperDialog) artPaperDialog.close();
+		});
+
+		function updateCatAudioToggle() {
+			const isPlaying = !roomSong.paused;
+			catAudioToggle.setAttribute("aria-pressed", String(isPlaying));
+			catAudioToggle.setAttribute("aria-label", `${isPlaying ? "Pause" : "Play"} School Rooftop music`);
+		}
+
+		roomSong.addEventListener("play", updateCatAudioToggle);
+		roomSong.addEventListener("pause", updateCatAudioToggle);
+		catAudioToggle.addEventListener("click", () => {
+			if (roomSong.paused) {
+				roomSong.play().catch(updateCatAudioToggle);
+			} else {
+				roomSong.pause();
+			}
+		});
+		roomSong.play().catch(updateCatAudioToggle);
+
+		document.querySelectorAll(".wall-frame").forEach((frame) => {
+			frame.addEventListener("click", () => {
+				zoomedFrame.replaceChildren(frame.querySelector(".wall-art").cloneNode(true));
+				document.getElementById("photoWho").textContent = frame.dataset.who;
+				document.getElementById("photoWhen").textContent = frame.dataset.when;
+				document.getElementById("photoWhere").textContent = frame.dataset.where;
+				document.getElementById("photoAbout").textContent = frame.dataset.about;
+				artworkDialog.showModal();
+			});
+		});
+
+		function closeZoomedArtwork() {
+			if (artworkDialog.open) artworkDialog.close();
+		}
+
+		document.getElementById("closeArtwork").addEventListener("click", closeZoomedArtwork);
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "Escape" && artworkDialog.open) {
+				event.preventDefault();
+				closeZoomedArtwork();
+			}
+		});
+		artworkDialog.addEventListener("click", (event) => {
+			if (event.target === artworkDialog) closeZoomedArtwork();
+		});
+	</script>
+</body>
+</html>
